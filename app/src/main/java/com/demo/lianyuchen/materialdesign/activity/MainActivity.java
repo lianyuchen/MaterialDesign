@@ -13,77 +13,49 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.FrameLayout;
 
 import com.demo.lianyuchen.materialdesign.R;
 import com.demo.lianyuchen.materialdesign.fragment.FragmentOne;
 import com.demo.lianyuchen.materialdesign.fragment.FragmentThree;
 import com.demo.lianyuchen.materialdesign.fragment.FragmentTwo;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 public class MainActivity extends BaseActivity {
 
-    private CoordinatorLayout rootLayout;
-    private CollapsingToolbarLayout collapsingToolbarLayout;
-    private Toolbar mToolbar;
-    private DrawerLayout mDrawerLayout;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.collapsingToolbarLayout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+    @BindView(R.id.frame_content)
+    FrameLayout frameContent;
+    @BindView(R.id.fabBtn)
+    FloatingActionButton fabBtn;
+    @BindView(R.id.coordinatorLayout)
+    CoordinatorLayout coordinatorLayout;
+    @BindView(R.id.navigation)
+    NavigationView navigation;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        rootLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
-
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.collapsingToolbarLayout);
+        ButterKnife.bind(this);
         //设置ToolBar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-
-        //设置tabLayout
-//        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-//        tabLayout.addTab(tabLayout.newTab().setText("Tab 1"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Tab 2"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Tab 3"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Tab 4"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Tab 5"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Tab 6"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Tab 7"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Tab 8"));
-//        tabLayout.addTab(tabLayout.newTab().setText("Tab 9"));
+        setSupportActionBar(toolbar);
         //设置抽屉DrawerLayout
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar,
+        ActionBarDrawerToggle mDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.drawer_open, R.string.drawer_close);
         mDrawerToggle.syncState();//初始化状态
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        drawerLayout.setDrawerListener(mDrawerToggle);
 
-        //设置导航栏NavigationView的点击事件
-        NavigationView mNavigationView = (NavigationView) findViewById(R.id.navigation);
-
-        setupNavigationDrawerContent(mNavigationView);
+        setupNavigationDrawerContent(navigation);
         setFragment(0);
-        //设置FAB的点击事件
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fabBtn);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(rootLayout, "I am Snackbar", Snackbar.LENGTH_SHORT).show();
-            }
-        });
-
-//        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-//
-//        // use this setting to improve performance if you know that changes
-//        // in content do not change the layout size of the RecyclerView
-//        mRecyclerView.setHasFixedSize(true);
-//
-//        // use a linear layout manager
-//        mLayoutManager = new LinearLayoutManager(this);
-//        mRecyclerView.setLayoutManager(mLayoutManager);
-//
-//        // specify an adapter (see also next example)
-//        mAdapter = new MyAdapter(myDataset);
-//        mRecyclerView.setAdapter(mAdapter);
     }
 
     private void setupNavigationDrawerContent(NavigationView navigationView) {
@@ -96,19 +68,19 @@ public class MainActivity extends BaseActivity {
                                 menuItem.setChecked(true);
                                 setFragment(0);
                                 collapsingToolbarLayout.setTitle("我的动态");
-                                mDrawerLayout.closeDrawer(GravityCompat.START);
+                                drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.item_two:
                                 menuItem.setChecked(true);
                                 setFragment(1);
                                 collapsingToolbarLayout.setTitle("我的留言");
-                                mDrawerLayout.closeDrawer(GravityCompat.START);
+                                drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
                             case R.id.item_three:
                                 menuItem.setChecked(true);
                                 setFragment(2);
                                 collapsingToolbarLayout.setTitle("我的留言");
-                                mDrawerLayout.closeDrawer(GravityCompat.START);
+                                drawerLayout.closeDrawer(GravityCompat.START);
                                 return true;
 
                         }
@@ -170,4 +142,8 @@ public class MainActivity extends BaseActivity {
 
     }
 
+    @OnClick(R.id.fabBtn)
+    public void showSnackbar() {
+        Snackbar.make(coordinatorLayout, "I am Snackbar", Snackbar.LENGTH_SHORT).show();
+    }
 }
