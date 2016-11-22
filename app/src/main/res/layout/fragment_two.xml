@@ -3,9 +3,18 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
+        android:id="@+id/tv_old"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Fragment Two"
+        android:text="Fragment Old"
         android:textSize="40sp"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/tv_new"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Fragment New"
+        android:textSize="40sp"
+        android:visibility="invisible"
         android:gravity="center"/>
 </LinearLayout>

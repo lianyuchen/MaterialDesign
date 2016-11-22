@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.daojia.lib.utils.LogUtils;
+import com.daojia.lib.utils.PhoneUtils;
 import com.demo.lianyuchen.materialdesign.R;
 
 /**
@@ -22,6 +24,12 @@ public class FragmentOne extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        initView();
         return inflater.inflate(R.layout.fragment_one,container,false);
+    }
+
+    private void initView() {
+        LogUtils.i(PhoneUtils.getVersionName(getActivity().getApplicationContext()));
     }
 }
